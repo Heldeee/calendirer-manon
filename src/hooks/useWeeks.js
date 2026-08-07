@@ -1,39 +1,40 @@
-function toISO(d) {
-    return d.toISOString().split("T")[0];
-}
-
-function startOfWeekMonday(date) {
-    const d = new Date(date);
-    const day = d.getDay(); // 0 = dimanche
-    const diff = day === 0 ? -6 : 1 - day;
-    d.setDate(d.getDate() + diff);
-    d.setHours(0, 0, 0, 0);
-    return d;
-}
+import { toISO, startOfWeekMonday } from "../utils/date";
 
 export function useWeeks(schedule) {
-    const today = new Date();
-    const isWeekend = today.getDay() === 0 || today.getDay() === 6;
+  const today = new Date();
+  const todayISO = toISO(today);
+  const todayMonday = startOfWeekMonday(today);
 
-    const anchorMonday = startOfWeekMonday(today);
-    if (isWeekend) anchorMonday.setDate(anchorMonday.getDate() + 7);
+  const dateKeys = Object.keys(schedule).sort();
 
-    // Fenêtre : une semaine avant l'ancre, l'ancre, et 2 semaines après
-    const offsets = [-1, 0, 1, 2];
+  let firstMonday = todayMonday;
+  let lastMonday = todayMonday;
 
-    const weeks = offsets.map((offset) => {
-        const monday = new Date(anchorMonday);
-        monday.setDate(monday.getDate() + offset * 7);
+  if (dateKeys.length > 0) {
+    const firstDataMonday = startOfWeekMonday(new Date(dateKeys[0]));
+    const lastDataMonday = startOfWeekMonday(new Date(dateKeys[dateKeys.length - 1]));
 
-        const days = Array.from({ length: 7 }).map((_, i) => {
-            const d = new Date(monday);
-            d.setDate(monday.getDate() + i);
-            const iso = toISO(d);
-            return { dateISO: iso, date: d, entry: schedule[iso] || null };
-        });
+    firstMonday = firstDataMonday < todayMonday ? firstDataMonday : todayMonday;
+    lastMonday = lastDataMonday > todayMonday ? lastDataMonday : todayMonday;
+  }
 
-        return { monday, days };
+  const weeks = [];
+  let cursor = new Date(firstMonday);
+  while (cursor <= lastMonday) {
+    const monday = new Date(cursor);
+    const days = Array.from({ length: 7 }).map((_, i) => {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      const iso = toISO(d);
+      return { dateISO: iso, date: d, entry: schedule[iso] ?? null };
     });
+    weeks.push({ monday, days });
+    cursor.setDate(cursor.getDate() + 7);
+  }
 
-    return { weeks, anchorIndex: offsets.indexOf(0), todayISO: toISO(today) };
+  const anchorIndex = weeks.findIndex(
+    (w) => w.monday.getTime() === todayMonday.getTime()
+  );
+
+  return { weeks, anchorIndex, todayISO };
 }

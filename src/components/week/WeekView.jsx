@@ -1,18 +1,39 @@
+import { useState, useRef } from "react";
 import { Box } from "@mui/material";
 import { useWeeks } from "../../hooks/useWeeks";
-import WeekHeader from "./WeekHeader";
+import { useScheduleData } from "../../hooks/useSchedule";
+import PagerHeader from "../ui/PagerHeader";
 import WeekPager from "./WeekPager";
-import schedule from "../../data/schedule.json";
 
 export default function WeekView() {
-    const { weeks, anchorIndex, todayISO } = useWeeks(schedule);
-    const anchorWeek = weeks[anchorIndex];
-    const label = `Semaine du ${anchorWeek.monday.toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}`;
+  const schedule = useScheduleData();
+  const { weeks, anchorIndex, todayISO } = useWeeks(schedule);
+  const [activeIndex, setActiveIndex] = useState(anchorIndex);
+  const pagerRef = useRef(null);
 
-    return (
-        <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-            <WeekHeader label={label} />
-            <WeekPager weeks={weeks} anchorIndex={anchorIndex} todayISO={todayISO} />
-        </Box>
-    );
+  const activeWeek = weeks[activeIndex];
+  const label = `Semaine du ${activeWeek.monday.toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}`;
+
+  const isOnCurrentWeek = activeIndex === anchorIndex;
+
+  const goToToday = () => {
+    pagerRef.current?.scrollToIndex(anchorIndex);
+  };
+
+  return (
+    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+      <PagerHeader
+        eyebrow="Planning"
+        label={label}
+        action={!isOnCurrentWeek ? { label: "Aujourd'hui", onClick: goToToday } : null}
+      />
+      <WeekPager
+        ref={pagerRef}
+        weeks={weeks}
+        anchorIndex={anchorIndex}
+        todayISO={todayISO}
+        onActiveChange={setActiveIndex}
+      />
+    </Box>
+  );
 }

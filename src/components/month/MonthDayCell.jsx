@@ -15,11 +15,7 @@ export default function MonthDayCell({ date, entry, isToday, isOutsideMonth }) {
                 justifyContent: "center",
                 gap: 0.25,
                 bgcolor: isOutsideMonth ? "transparent" : "rgba(255,255,255,0.85)",
-                border: isToday
-                    ? "1.5px solid rgba(183,110,121,0.55)"
-                    : isOutsideMonth
-                        ? "1px solid transparent"
-                        : "1px solid rgba(227,154,166,0.2)",
+                border: isToday ? "2Dpx solid rgba(255, 0, 43, 0.2)" : "1px solid transparent",
                 opacity: isOutsideMonth ? 0.35 : 1,
             }}
         >

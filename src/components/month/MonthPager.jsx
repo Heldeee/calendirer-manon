@@ -1,11 +1,8 @@
-import { forwardRef, useRef, useLayoutEffect, useState, useImperativeHandle } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
-import WeekPage from "./WeekPage";
+import MonthGrid from "./MonthGrid";
 
-const WeekPager = forwardRef(function WeekPager(
-  { weeks, anchorIndex, todayISO, onActiveChange },
-  ref
-) {
+export default function MonthPager({ months, anchorIndex, todayISO, onActiveChange }) {
   const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(anchorIndex);
 
@@ -14,15 +11,6 @@ const WeekPager = forwardRef(function WeekPager(
     if (!el) return;
     el.scrollTo({ top: anchorIndex * el.clientHeight, behavior: "auto" });
   }, [anchorIndex]);
-
-  // Expose une méthode pour scroller vers un index précis, avec animation
-  useImperativeHandle(ref, () => ({
-    scrollToIndex: (index) => {
-      const el = containerRef.current;
-      if (!el) return;
-      el.scrollTo({ top: index * el.clientHeight, behavior: "smooth" });
-    },
-  }));
 
   const handleScroll = () => {
     const el = containerRef.current;
@@ -50,23 +38,23 @@ const WeekPager = forwardRef(function WeekPager(
           msOverflowStyle: "none",
         }}
       >
-        {weeks.map((week, i) => (
+        {months.map((m, i) => (
           <Box
             key={i}
             sx={{ height: "100%", scrollSnapAlign: "start", scrollSnapStop: "always", boxSizing: "border-box" }}
           >
-            <WeekPage week={week} todayISO={todayISO} />
+            <MonthGrid year={m.year} month={m.month} todayISO={todayISO} />
           </Box>
         ))}
       </Box>
 
-      <Stack spacing={0.8} sx={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)" }}>
-        {weeks.map((_, i) => (
+      <Stack spacing={0.8} sx={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)" }}>
+        {months.map((_, i) => (
           <Box
             key={i}
             sx={{
-              width: i === activeIndex ? 7 : 5,
-              height: i === activeIndex ? 20 : 5,
+              width: 6,
+              height: i === activeIndex ? 16 : 6,
               borderRadius: 3,
               bgcolor: i === activeIndex ? "primary.dark" : "rgba(156,132,138,0.4)",
               transition: "all 0.25s ease",
@@ -76,6 +64,4 @@ const WeekPager = forwardRef(function WeekPager(
       </Stack>
     </Box>
   );
-});
-
-export default WeekPager;
+}

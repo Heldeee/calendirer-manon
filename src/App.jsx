@@ -23,7 +23,14 @@ export default function App() {
             background: "linear-gradient(180deg, #FDF6F3 0%, #FCEFF1 100%)",
           }}
         >
-          <Box sx={{ flex: 1, minHeight: 0, overflow: "hidden", pb: `${NAV_HEIGHT}px` }}>
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              overflow: "hidden",
+              pb: `calc(${NAV_HEIGHT}px + env(safe-area-inset-bottom, 0px))`,
+            }}
+          >
             {tab === "week" && <WeekView />}
             {tab === "month" && <MonthView />}
           </Box>
