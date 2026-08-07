@@ -16,6 +16,8 @@ export default function PasswordGate({ children }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(input)
+        console.log(APP_PASSWORD)
         if (input === APP_PASSWORD) {
             sessionStorage.setItem(STORAGE_KEY, "true");
             setUnlocked(true);

@@ -12,7 +12,7 @@ export default function App() {
   const [tab, setTab] = useState("week");
 
   return (
-    <ThemeProvider theme={geTheme}>
+    <ThemeProvider theme={getTheme}>
       <CssBaseline />
       <PasswordGate>
         <Box
