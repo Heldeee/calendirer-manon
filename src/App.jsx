@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ThemeProvider, CssBaseline, Box } from "@mui/material";
-import { geTheme } from "./theme/theme";
+import { getTheme } from "./theme/theme";
 import WeekView from "./components/week/WeekView";
 import MonthView from "./components/month/MonthView";
 import BottomNav from "./components/navigation/BottomNav";
