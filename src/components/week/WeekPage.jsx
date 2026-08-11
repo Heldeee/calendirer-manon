@@ -1,5 +1,7 @@
 import { Stack } from "@mui/material";
 import DayRow from "./DayRow";
+import { motion } from "framer-motion"
+
 
 export default function WeekPage({ week, todayISO }) {
     return (
@@ -9,7 +11,7 @@ export default function WeekPage({ week, todayISO }) {
                 width: "100%",
                 height: "100%",
                 flexShrink: 0,
-                px: 2,
+                px: 4,
                 gap: 1.5,
                 boxSizing: "border-box",
             }}

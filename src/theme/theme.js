@@ -42,9 +42,9 @@ export const getTheme = (mode) =>
         },
         shape: { borderRadius: 24 },
         typography: {
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-            h1: { fontSize: "1.9rem", fontWeight: 700 },
-            h2: { fontSize: "2.1rem", fontWeight: 700, fontVariantNumeric: "tabular-nums" },
+            fontFamily: '"Inter", -apple-system, sans-serif', // corps de texte
+            h1: { fontFamily: '"Fraunces", serif', fontWeight: 600 }, // titres = caractère
+            h2: { fontFamily: '"Fraunces", serif', fontWeight: 600, fontVariantNumeric: "tabular-nums" },
         },
         components: {
             MuiButtonBase: { defaultProps: { disableRipple: true } },

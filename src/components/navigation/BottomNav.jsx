@@ -1,7 +1,10 @@
-import { Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { Paper, BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import ViewWeekIcon from "@mui/icons-material/ViewWeekOutlined";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { RADIUS } from "../../theme/radius";
+import hellokittySticker from "../../assets/hello-kitty.png"
+import hellokittySticker2 from "../../assets/hello-kitty-2.png"
+
 
 export default function BottomNav({ value, onChange, height = 64 }) {
   return (
@@ -34,6 +37,46 @@ export default function BottomNav({ value, onChange, height = 64 }) {
         }}
       >
         <BottomNavigationAction label="Semaine" value="week" icon={<ViewWeekIcon />} />
+        <Box
+          component="img"
+          src={hellokittySticker}
+          alt=""
+          sx={{
+            position: "absolute",
+            width: 70,
+            right: 0,
+            transform: "rotate(30deg)",
+            transformOrigin: "center",
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        />
+        <Box
+          component="img"
+          src={hellokittySticker}
+          alt=""
+          sx={{
+            position: "absolute",
+            width: 70,
+            left: 10,
+            transform: "rotate(-30deg)",
+            transformOrigin: "center",
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        />
+        <Box
+          component="img"
+          src={hellokittySticker2}
+          alt=""
+          sx={{
+            position: "absolute",
+            width: 50,
+            transformOrigin: "center",
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        />
         <BottomNavigationAction label="Mois" value="month" icon={<CalendarMonthIcon />} />
       </BottomNavigation>
     </Paper>
