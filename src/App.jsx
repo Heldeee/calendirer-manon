@@ -5,6 +5,7 @@ import WeekView from "./components/week/WeekView";
 import MonthView from "./components/month/MonthView";
 import BottomNav from "./components/navigation/BottomNav";
 import PasswordGate from "./components/auth/PasswordGate";
+import BusView from "./features/transit/BusView";
 
 const NAV_HEIGHT = 64;
 
@@ -33,6 +34,7 @@ export default function App() {
           >
             {tab === "week" && <WeekView />}
             {tab === "month" && <MonthView />}
+            {tab === "bus" && <BusView />}
           </Box>
         </Box>
         <BottomNav value={tab} onChange={setTab} height={NAV_HEIGHT} />

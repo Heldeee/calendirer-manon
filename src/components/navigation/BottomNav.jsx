@@ -1,6 +1,7 @@
 import { Paper, BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import ViewWeekIcon from "@mui/icons-material/ViewWeekOutlined";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonthOutlined";
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBusOutlined";
 import { RADIUS } from "../../theme/radius";
 import hellokittySticker from "../../assets/hello-kitty.png"
 import hellokittySticker2 from "../../assets/hello-kitty-2.png"
@@ -78,6 +79,7 @@ export default function BottomNav({ value, onChange, height = 64 }) {
           }}
         />
         <BottomNavigationAction label="Mois" value="month" icon={<CalendarMonthIcon />} />
+        <BottomNavigationAction label="Bus" value="bus" icon={<DirectionsBusIcon />} />
       </BottomNavigation>
     </Paper>
   );
