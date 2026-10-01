@@ -10,6 +10,8 @@ import hellokittySticker2 from "../../assets/hello-kitty-2.png"
 export default function BottomNav({ value, onChange, height = 64 }) {
   return (
     <Paper
+      component="nav"
+      aria-label="Navigation principale"
       sx={{
         position: "fixed",
         bottom: 0,
@@ -23,6 +25,7 @@ export default function BottomNav({ value, onChange, height = 64 }) {
         height: `calc(${height}px + env(safe-area-inset-bottom, 0px))`,
         pb: "env(safe-area-inset-bottom, 0px)",
         boxSizing: "border-box",
+        zIndex: 10,
       }}
       elevation={0}
     >
@@ -34,53 +37,25 @@ export default function BottomNav({ value, onChange, height = 64 }) {
           height,
           bgcolor: "transparent",
           "& .Mui-selected": { color: "primary.dark" },
-          "& .MuiBottomNavigationAction-root": { color: "text.secondary" },
+          "& .MuiBottomNavigationAction-root": {
+            color: "text.secondary", flex: "1 1 0", minWidth: 0, maxWidth: "none",
+            minHeight: 48, px: 1,
+          },
+          "& .MuiBottomNavigationAction-root:focus-visible": {
+            outline: "2px solid #B76E79", outlineOffset: "-4px", borderRadius: "12px",
+          },
         }}
       >
         <BottomNavigationAction label="Semaine" value="week" icon={<ViewWeekIcon />} />
-        <Box
-          component="img"
-          src={hellokittySticker}
-          alt=""
-          sx={{
-            position: "absolute",
-            width: 70,
-            right: 0,
-            transform: "rotate(30deg)",
-            transformOrigin: "center",
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
-        <Box
-          component="img"
-          src={hellokittySticker}
-          alt=""
-          sx={{
-            position: "absolute",
-            width: 70,
-            left: 10,
-            transform: "rotate(-30deg)",
-            transformOrigin: "center",
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
-        <Box
-          component="img"
-          src={hellokittySticker2}
-          alt=""
-          sx={{
-            position: "absolute",
-            width: 50,
-            transformOrigin: "center",
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
         <BottomNavigationAction label="Mois" value="month" icon={<CalendarMonthIcon />} />
         <BottomNavigationAction label="Bus" value="bus" icon={<DirectionsBusIcon />} />
       </BottomNavigation>
+      <Box component="img" src={hellokittySticker} alt="" aria-hidden="true"
+        sx={{ position: "absolute", width: 26, left: 5, top: 18, transform: "rotate(-20deg)", pointerEvents: "none" }} />
+      <Box component="img" src={hellokittySticker2} alt="" aria-hidden="true"
+        sx={{ position: "absolute", width: 24, left: "33.333%", top: 20, transform: "translateX(-50%)", pointerEvents: "none" }} />
+      <Box component="img" src={hellokittySticker} alt="" aria-hidden="true"
+        sx={{ position: "absolute", width: 26, right: 5, top: 18, transform: "rotate(20deg)", pointerEvents: "none" }} />
     </Paper>
   );
 }
