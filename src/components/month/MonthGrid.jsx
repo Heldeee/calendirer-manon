@@ -37,7 +37,7 @@ export default function MonthGrid({ year, month, todayISO }) {
         gridTemplateColumns: "repeat(7, 1fr)",
         gridTemplateRows: `repeat(${rowCount}, 1fr)`,
         gap: 0.75,
-        px: 2,
+        px: 2.5,
         py: 1.5,
       }}
     >

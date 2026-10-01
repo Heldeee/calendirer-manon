@@ -7,15 +7,15 @@ export default function HourChip({ label, variant = "start" }) {
       label={label}
       size="small"
       sx={{
-        fontWeight: 700,
-        fontSize: "0.82rem",
-        height: 30,
+        fontWeight: 600,
+        fontSize: { xs: '.72rem', sm: '.8rem' },
+        height: 28,
         borderRadius: `${RADIUS.chip}px`,
         ...(variant === "start"
-          ? { bgcolor: "primary.main", color: "#FFFFFF" }
-          : { bgcolor: "transparent", color: "primary.dark", border: "1.5px solid", borderColor: "primary.light" }),
+          ? { bgcolor: "#F5D9E3", color: "#754B5B" }
+          : { bgcolor: "#FFF9FB", color: "#8F5D70", border: "1px solid #EED2DC" }),
         pointerEvents: "none",
-        "& .MuiChip-label": { px: 1.2 },
+        "& .MuiChip-label": { px: 1, fontVariantNumeric: 'tabular-nums' },
       }}
     />
   );

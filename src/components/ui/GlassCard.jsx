@@ -10,10 +10,10 @@ export default function GlassCard({ children, sx = {}, ...props }) {
                 boxSizing: "border-box",
                 borderRadius: `${RADIUS.card}px`,
                 p: 2.5,
-                bgcolor: "rgba(255,255,255,0.85)",
-                border: "1px solid rgba(227,154,166,0.25)",
+                bgcolor: "rgba(255,255,255,0.82)",
+                border: "1px solid #F0DEE5",
                 boxShadow:
-                    "0 8px 30px rgba(183,110,121,0.10), 0 1px 3px rgba(183,110,121,0.06)",
+                    "0 4px 18px rgba(183,110,121,0.055)",
                 cursor: "default",
                 userSelect: "none",
                 ...sx,

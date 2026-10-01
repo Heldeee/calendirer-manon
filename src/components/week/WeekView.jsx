@@ -21,7 +21,7 @@ export default function WeekView() {
   };
 
   return (
-    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Box sx={{ height: "100%", width: '100%', maxWidth: 680, mx: 'auto', display: "flex", flexDirection: "column" }}>
       <PagerHeader
         eyebrow="Planning"
         label={label}

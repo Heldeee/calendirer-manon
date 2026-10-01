@@ -17,10 +17,10 @@ export default function MonthView() {
   });
 
   return (
-    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Box sx={{ height: "100%", width: '100%', maxWidth: 680, mx: 'auto', display: "flex", flexDirection: "column" }}>
       <PagerHeader eyebrow="Calendrier" label={label} />
 
-      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", px: 2, pt: 1.5, flexShrink: 0 }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", px: 2.5, gap: .75, pt: 1.5, flexShrink: 0 }}>
         {JOURS_LABEL.map((j) => (
             <Typography
             key={j}

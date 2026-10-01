@@ -8,12 +8,13 @@ import PasswordGate from "./components/auth/PasswordGate";
 import BusView from "./features/transit/BusView";
 
 const NAV_HEIGHT = 64;
+const appTheme = getTheme();
 
 export default function App() {
   const [tab, setTab] = useState("week");
 
   return (
-    <ThemeProvider theme={getTheme}>
+    <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <PasswordGate>
         <Box
@@ -21,7 +22,8 @@ export default function App() {
             height: "100dvh",
             display: "flex",
             flexDirection: "column",
-            background: "linear-gradient(180deg, #FDF6F3 0%, #FCEFF1 100%)",
+            backgroundImage: "radial-gradient(circle, rgba(202,135,154,.09) 1px, transparent 1px), linear-gradient(180deg, #FFF9F7 0%, #FCEDF2 100%)",
+            backgroundSize: "18px 18px, 100% 100%",
           }}
         >
           <Box
@@ -29,6 +31,7 @@ export default function App() {
               flex: 1,
               minHeight: 0,
               overflow: "hidden",
+              boxSizing: "border-box",
               pb: `calc(${NAV_HEIGHT}px + env(safe-area-inset-bottom, 0px))`,
             }}
           >

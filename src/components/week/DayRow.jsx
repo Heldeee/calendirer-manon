@@ -15,8 +15,12 @@ export default function DayRow({ day, isToday }) {
       sx={{
         position: "relative",
         overflow: "visible",
-        py: 1.8,
-        px: 2.5,
+        py: 1,
+        px: { xs: 1.5, sm: 2.5 },
+        minHeight: 0,
+        display: 'flex',
+        alignItems: 'center',
+        bgcolor: isToday ? '#FFF8FA' : 'rgba(255,255,255,.82)',
         border: isToday
           ? "1px solid rgba(227, 154, 166, 0.68)"
           : "1px solid rgba(227, 154, 166, 0.25)",
@@ -31,10 +35,11 @@ export default function DayRow({ day, isToday }) {
           alt=""
           sx={{
             position: "absolute",
-            top: -10,
-            right: -20,
-            width: 50,
-            transform: "rotate(30deg)",
+            top: 4,
+            left: 4,
+            width: 24,
+            opacity: .85,
+            transform: "rotate(-12deg)",
             transformOrigin: "center",
             pointerEvents: "none",
             zIndex: 2,
@@ -48,19 +53,22 @@ export default function DayRow({ day, isToday }) {
           gridTemplateColumns: "1fr auto",
           alignItems: "center",
           width: "100%",
+          gap: 1,
+          pl: isToday ? 2 : 0,
         }}
       >
         <Typography
           sx={{
             textTransform: "capitalize",
-            fontWeight: 600,
+            fontWeight: 500,
+            fontSize: { xs: '.82rem', sm: '.95rem' },
           }}
         >
           {label} {dateNum}
         </Typography>
 
         {day.entry ? (
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={.75}>
             <HourChip label={day.entry.debut} variant="start" />
             <HourChip label={day.entry.fin} variant="end" />
           </Stack>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import GlassCard from '../../components/ui/GlassCard';
+import KittyAccent from '../../components/ui/KittyAccent';
 import { BUS_STOPS, getDepartures } from './transitService';
 import { plannedDepartures, tomorrowDate } from './plannedService';
 const clock = (time) => new Date(time).toLocaleTimeString('fr-FR', { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit' });
@@ -53,9 +54,25 @@ export default function BusView() {
     return () => { active = false; controller.abort(); clearInterval(interval); document.removeEventListener('visibilitychange', load); };
   }, [refresh, mode]);
   const loading = mode === 'current' && Object.values(states).some((state) => state.loading);
-  return <Box sx={{ height: '100%', minHeight: 0, overflow: 'hidden', boxSizing: 'border-box', containerType: 'size', px: { xs: 2, sm: 3 }, py: 1.5, maxWidth: 680, mx: 'auto', display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+  return <Box sx={{ height: '100%', minHeight: 0, overflow: 'hidden', boxSizing: 'border-box', containerType: 'size', px: { xs: 2, sm: 3 }, py: 1.5, maxWidth: 680, mx: 'auto', display: 'flex', flexDirection: 'column', gap: 1.5,
+    '@media (max-height: 700px)': {
+      gap: .75, py: .75,
+      '& section': { p: 1, gap: .4 },
+      '& section h2': { fontSize: '1rem' },
+      '& .bus-line-badge': { width: 28, height: 28 },
+      '& .bus-direction': { py: .35 },
+      '& .bus-direction p': { fontSize: '.65rem', lineHeight: 1.15 },
+      '& .bus-main-time': { fontSize: '1.45rem', lineHeight: 1.1 },
+      '& .bus-countdown': { fontSize: '.7rem' },
+      '& .bus-status p': { fontSize: '.58rem', lineHeight: 1.1 },
+      '& .bus-stop-footer': { pt: .35 },
+    },
+  }}>
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
-      <Typography component="h1" sx={{ fontFamily: '"Fraunces", serif', fontWeight: 500, color: '#665257', fontSize: 'clamp(1.5rem, 4cqh, 1.9rem)', lineHeight: 1.2 }}>Bus</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+        <Typography component="h1" sx={{ fontFamily: '"Fraunces", serif', fontWeight: 500, color: '#665257', fontSize: 'clamp(1.5rem, 4cqh, 1.9rem)', lineHeight: 1.2 }}>Bus</Typography>
+        <KittyAccent kind="heart" sx={{ width: 24, height: 20, opacity: .8 }} />
+      </Box>
       <Button aria-label="Actualiser les horaires" disabled={loading} onClick={() => setRefresh((n) => n + 1)} sx={{ minWidth: 44, minHeight: 44, color: '#B76E79' }}><RefreshIcon /></Button>
     </Box>
     <Box sx={{ display: 'flex', gap: .5, p: .5, borderRadius: '14px', bgcolor: '#F5E8EC', flexShrink: 0 }}>
@@ -84,12 +101,12 @@ export default function BusView() {
         .replace(/BOULIAC/g, 'Bouliac').replace(/PESSAC/g, 'Pessac');
       return <GlassCard key={stop.id} component="section" aria-labelledby={`stop-${stop.id}`} sx={{ minHeight: 0, p: 'clamp(12px, 2.5cqh, 24px)', display: 'flex', flexDirection: 'column', gap: 'clamp(6px, 1.4cqh, 14px)', border: '1px solid #F0E0E3', boxShadow: '0 4px 18px rgba(183,110,121,.045)', bgcolor: 'rgba(255,255,255,.76)' }}>
         <Box sx={{ display: 'flex', gap: 1.25, alignItems: 'center' }}>
-          <Box sx={{ bgcolor: '#F9EFF1', color: '#98727C', borderRadius: '12px', width: 32, height: 32, display: 'grid', placeItems: 'center', fontSize: '.85rem', fontWeight: 600, flexShrink: 0 }}>24</Box>
+          <Box className="bus-line-badge" sx={{ bgcolor: '#F9EFF1', color: '#98727C', borderRadius: '12px', width: 32, height: 32, display: 'grid', placeItems: 'center', fontSize: '.85rem', fontWeight: 600, flexShrink: 0 }}>24</Box>
           <Box sx={{ minWidth: 0 }}>
             <Typography id={`stop-${stop.id}`} component="h2" sx={{ fontFamily: '"Fraunces", serif', fontWeight: 500, color: '#665257', fontSize: 'clamp(1.1rem, 2.8cqh, 1.35rem)', lineHeight: 1.15 }}>{stop.name}</Typography>
           </Box>
         </Box>
-        <Box sx={{ px: 1.25, py: .75, borderRadius: '12px', bgcolor: '#FAF3F4' }}>
+        <Box className="bus-direction" sx={{ px: 1.25, py: .75, borderRadius: '12px', bgcolor: '#FAF3F4' }}>
           <Typography sx={{ color: '#9C848A', fontSize: '.65rem', lineHeight: 1.2 }}>Direction</Typography>
           <Typography sx={{ color: '#765E65', fontSize: 'clamp(.8rem, 2.1cqh, .95rem)', lineHeight: 1.3, mt: .25 }}>{direction}</Typography>
         </Box>
@@ -97,8 +114,8 @@ export default function BusView() {
           {next ? <Box sx={{ width: '100%', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(90px, .65fr)', gap: 1.5, alignItems: 'center' }}>
             <Box>
               <Typography sx={{ fontSize: '.7rem', color: '#9C848A' }}>{mode === 'tomorrow' ? 'Passage prévu' : 'Prochain passage'}</Typography>
-              <Typography sx={{ fontSize: 'clamp(1.6rem, 4.6cqh, 2.4rem)', fontWeight: 500, lineHeight: 1.2, fontVariantNumeric: 'tabular-nums', color: '#665257' }}>{clock(next.time)}</Typography>
-              <Typography sx={{ fontSize: 'clamp(.8rem, 2cqh, .95rem)', color: '#A37B86', fontWeight: 400 }}>{mode === 'tomorrow' ? 'Demain' : stale ? 'À confirmer' : minutes <= 1 ? 'Imminent' : `Dans ${minutes} min`}</Typography>
+              <Typography className="bus-main-time" sx={{ fontSize: 'clamp(1.6rem, 4.6cqh, 2.4rem)', fontWeight: 500, lineHeight: 1.2, fontVariantNumeric: 'tabular-nums', color: '#665257' }}>{clock(next.time)}</Typography>
+              <Typography className="bus-countdown" sx={{ fontSize: 'clamp(.8rem, 2cqh, .95rem)', color: '#A37B86', fontWeight: 400 }}>{mode === 'tomorrow' ? 'Demain' : stale ? 'À confirmer' : minutes <= 1 ? 'Imminent' : `Dans ${minutes} min`}</Typography>
               <PassageStatus departure={next} />
             </Box>
             <Box sx={{ borderLeft: '1px solid #F0DCE0', pl: 1.5 }}>
@@ -113,7 +130,7 @@ export default function BusView() {
             {!state || (state.loading && !state.updated && !state.error) ? <><CircularProgress size={18} /><Typography variant="body2">Recherche des passages…</Typography></> : <Typography variant="body2" color="text.secondary">{state.error ? mode === 'tomorrow' ? state.error : 'Flux TBM indisponible.' : mode === 'tomorrow' ? 'Aucun passage prévu après cette heure.' : 'Aucun passage annoncé.'}</Typography>}
           </Box>}
         </Box>
-        <Box sx={{ borderTop: '1px solid #F5E7EA', pt: .75, flexShrink: 0 }}>
+        <Box className="bus-stop-footer" sx={{ borderTop: '1px solid #F5E7EA', pt: .75, flexShrink: 0 }}>
           {stale && state?.updated ? <Typography sx={{ fontSize: '.65rem', color: '#A15F6B' }}>Données anciennes · à confirmer</Typography> : null}
           <Typography sx={{ fontSize: '.65rem', color: '#9C848A' }}>{state?.updated ? mode === 'tomorrow' ? `Fiche récupérée le ${new Date(state.updated).toLocaleDateString('fr-FR', { timeZone: 'Europe/Paris' })}` : `Mis à jour à ${clock(state.updated)}` : mode === 'tomorrow' ? 'Horaires théoriques TBM' : 'En attente du flux TBM'}{state?.loading && state?.updated ? ' · Actualisation…' : ''}</Typography>
         </Box>
@@ -124,7 +141,7 @@ export default function BusView() {
 }
 
 function PassageStatus({ departure, small = false }) {
-  return <Box sx={{ mt: .35 }}>
+  return <Box className="bus-status" sx={{ mt: .35 }}>
     <Typography sx={{ fontSize: small ? '.6rem' : '.7rem', color: departure.realtime ? '#628270' : '#9C848A', lineHeight: 1.2 }}>{departure.realtime ? '● Temps réel' : 'Horaire théorique'}</Typography>
     {departure.realtime && departure.delay > 0 ? <Typography sx={{ fontSize: small ? '.6rem' : '.7rem', color: '#B76E79', lineHeight: 1.2, mt: .25 }}>Retard +{departure.delay} min</Typography> : null}
   </Box>;

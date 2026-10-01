@@ -5,6 +5,7 @@ import DirectionsBusIcon from "@mui/icons-material/DirectionsBusOutlined";
 import { RADIUS } from "../../theme/radius";
 import hellokittySticker from "../../assets/hello-kitty.png"
 import hellokittySticker2 from "../../assets/hello-kitty-2.png"
+import KittyAccent from '../ui/KittyAccent';
 
 
 export default function BottomNav({ value, onChange, height = 64 }) {
@@ -36,11 +37,15 @@ export default function BottomNav({ value, onChange, height = 64 }) {
         sx={{
           height,
           bgcolor: "transparent",
-          "& .Mui-selected": { color: "primary.dark" },
+          px: 4,
+          "& .Mui-selected": { color: "primary.dark", bgcolor: '#FAEDF2' },
           "& .MuiBottomNavigationAction-root": {
             color: "text.secondary", flex: "1 1 0", minWidth: 0, maxWidth: "none",
             minHeight: 48, px: 1,
+            my: .75, mx: .25, borderRadius: '14px', transition: 'background-color .18s ease',
           },
+          "& .MuiBottomNavigationAction-label": { fontSize: '.7rem', mt: .25 },
+          "& .MuiBottomNavigationAction-label.Mui-selected": { fontSize: '.7rem' },
           "& .MuiBottomNavigationAction-root:focus-visible": {
             outline: "2px solid #B76E79", outlineOffset: "-4px", borderRadius: "12px",
           },
@@ -52,9 +57,8 @@ export default function BottomNav({ value, onChange, height = 64 }) {
       </BottomNavigation>
       <Box component="img" src={hellokittySticker} alt="" aria-hidden="true"
         sx={{ position: "absolute", width: 26, left: 5, top: 18, transform: "rotate(-20deg)", pointerEvents: "none" }} />
+      <KittyAccent sx={{ position: 'absolute', width: 20, height: 16, left: '33.333%', top: 22, transform: 'translateX(-50%)', opacity: .7 }} />
       <Box component="img" src={hellokittySticker2} alt="" aria-hidden="true"
-        sx={{ position: "absolute", width: 24, left: "33.333%", top: 20, transform: "translateX(-50%)", pointerEvents: "none" }} />
-      <Box component="img" src={hellokittySticker} alt="" aria-hidden="true"
         sx={{ position: "absolute", width: 26, right: 5, top: 18, transform: "rotate(20deg)", pointerEvents: "none" }} />
     </Paper>
   );

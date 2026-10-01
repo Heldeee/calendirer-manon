@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Box, TextField, Button, Typography, Stack } from "@mui/material";
 import GlassCard from "../ui/GlassCard";
+import KittyAccent from '../ui/KittyAccent';
+import kitty from '../../assets/hello-kitty-2.png';
 
 const STORAGE_KEY = "calendrier_unlocked";
 const APP_PASSWORD = import.meta.env.VITE_APP_PASSWORD;
@@ -38,10 +40,12 @@ export default function PasswordGate({ children }) {
         >
             <GlassCard sx={{ width: "100%", maxWidth: 320, py: 4 }}>
                 <form onSubmit={handleSubmit}>
-                    <Stack spacing={2.5} alignItems="center">
+                    <Stack spacing={2.5} sx={{ alignItems: 'center' }}>
+                        <Box component="img" src={kitty} alt="" aria-hidden="true" sx={{ width: 58, height: 'auto', pointerEvents: 'none' }} />
                         <Typography variant="h1" sx={{ fontSize: "1.3rem" }}>
                             Accès privé
                         </Typography>
+                        <KittyAccent sx={{ width: 28, height: 20 }} />
                         <TextField
                             type="password"
                             fullWidth
